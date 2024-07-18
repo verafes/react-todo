@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-function AddTodoForm({ onAddTodo, todoList }) {
+function AddTodoForm({ onAddTodo }) {
     // New state variable and function to handle title change
     const [todoTitle, setTodoTitle] = useState("");
 
