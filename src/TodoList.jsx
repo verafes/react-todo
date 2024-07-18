@@ -1,10 +1,10 @@
 import TodoListItem from './TodoListItem.jsx';
 
 // mapping over todoList array
-function TodoList({ todos }) {
+function TodoList({ todoList }) {
     return (
         <ul>
-            {todos.map((item) => (
+            {todoList.map((item) => (
                 <TodoListItem key={item.id} todo={item}/>
             ))}
         </ul>

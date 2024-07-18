@@ -6,7 +6,6 @@ function AddTodoForm({ onAddTodo, todoList }) {
 
     function handleTitleChange(event) {
         console.log(todoTitle);
-        event.preventDefault();
         let newTodoTitle = event.target.value;
         setTodoTitle(newTodoTitle);
     }
@@ -14,10 +13,8 @@ function AddTodoForm({ onAddTodo, todoList }) {
     // Function to handle form submission
     const handleAddTodo = (event) => {
         event.preventDefault();
-        // Calculate nextId based on the current length of todoList
-        const nextId = todoList.length > 0 ? todoList[todoList.length - 1].id + 1 : 1;
         const newTodo = {
-            id: nextId,
+            id: Date.now(),
             title: todoTitle,
         };
         onAddTodo(newTodo);
