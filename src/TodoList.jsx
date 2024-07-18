@@ -1,11 +1,6 @@
 import TodoListItem from './TodoListItem.jsx';
 
-export const initialTodoList = [
-    { id: 1, title: "Complete assignment" },
-    { id: 2, title: "Read book" },
-    { id: 3, title: "Practice coding" }
-]
-
+// mapping over todoList array
 function TodoList({ todoList }) {
     return (
         <ul>
