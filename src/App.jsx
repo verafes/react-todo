@@ -5,12 +5,9 @@ import AddTodoForm from './AddTodoForm';
 
 // custom hook to store todos after reloading page
 function useSemiPersistentState() {
-    // read saved todo list from localStorage
-    const savedTodoList = localStorage.getItem('savedTodoList');
-
-    // initialize state with parsed list or empty arr
+    // initialize state with parsed list from localStorage or empty arr
     const [todoList, setTodoList] = useState(
-        JSON.parse(savedTodoList) || []
+        JSON.parse(localStorage.getItem('savedTodoList')) || []
     );
 
     // save todoList to localStorage on change
@@ -30,11 +27,17 @@ function App() {
         setTodoList([...todoList, newTodo]);
     };
 
+    // removing a todo from the list by its id
+    const removeTodo = (id) => {
+        const newTodoList = todoList.filter(todo => todo.id !== id);
+        setTodoList(newTodoList);
+    };
+
     return (
         <>
             <h1>Todo List</h1>
             <AddTodoForm onAddTodo={addTodo} todoList={todoList}/>
-            <TodoList todoList={todoList}/>
+            <TodoList todoList={todoList} onRemoveTodo={removeTodo}/>
         </>
     )
 }
