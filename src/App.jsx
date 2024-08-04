@@ -3,8 +3,7 @@ import './App.css'
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
 
-// custom hook to store todos after reloading page
-function useSemiPersistentState() {
+function App() {
     // initialize state with parsed list from localStorage or empty arr
     const [todoList, setTodoList] = useState(
         JSON.parse(localStorage.getItem('savedTodoList')) || []
@@ -14,13 +13,6 @@ function useSemiPersistentState() {
     useEffect(() => {
         localStorage.setItem('savedTodoList', JSON.stringify(todoList));
     }, [todoList]);
-
-    return [todoList, setTodoList];
-}
-
-function App() {
-    // using custom hook to manage todo list items
-    const [todoList, setTodoList] = useSemiPersistentState();
 
     // adding a new todo to the list
     const addTodo = (newTodo) => {
