@@ -4,15 +4,31 @@ import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
 
 function App() {
-    // initialize state with parsed list from localStorage or empty arr
-    const [todoList, setTodoList] = useState(
-        JSON.parse(localStorage.getItem('savedTodoList')) || []
-    );
+    // initialize state with empty arr and loading state
+    const [todoList, setTodoList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // save todoList to localStorage on change
     useEffect(() => {
-        localStorage.setItem('savedTodoList', JSON.stringify(todoList));
-    }, [todoList]);
+        new Promise((resolve, reject) =>
+            setTimeout(() =>
+                    resolve({
+                        data: {
+                            todoList: JSON.parse(localStorage.getItem("savedTodoList")),
+                        },
+                    }), 2000
+            )
+        ).then((result) => {
+            setTodoList(result.data.todoList);
+            setIsLoading(false);
+        });
+    }, []);
+
+    // hook to save todoList to localStorage on change after loading is completed
+    useEffect(() => {
+        if (isLoading === false) {
+            localStorage.setItem('savedTodoList', JSON.stringify(todoList));
+        }
+    }, [todoList, isLoading]);
 
     // adding a new todo to the list
     const addTodo = (newTodo) => {
@@ -28,8 +44,14 @@ function App() {
     return (
         <>
             <h1>Todo List</h1>
-            <AddTodoForm onAddTodo={addTodo} todoList={todoList}/>
-            <TodoList todoList={todoList} onRemoveTodo={removeTodo}/>
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : (
+                <>
+                    <AddTodoForm onAddTodo={addTodo} todoList={todoList}/>
+                    <TodoList todoList={todoList} onRemoveTodo={removeTodo}/>
+                </>
+            )}
         </>
     )
 }
