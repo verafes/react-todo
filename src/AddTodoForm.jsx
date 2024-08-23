@@ -14,10 +14,7 @@ function AddTodoForm({ onAddTodo }) {
     // Function to handle form submission
     const handleAddTodo = (event) => {
         event.preventDefault();
-        const newTodo = {
-            id: Date.now(),
-            title: todoTitle,
-        };
+        const newTodo = todoTitle
         onAddTodo(newTodo);
         setTodoTitle("");
     };

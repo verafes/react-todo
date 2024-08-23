@@ -48,10 +48,10 @@ function App() {
     }, []);
 
     // posting a new todo to the list
-    const addTodo = async (todo) => {
+    const addTodo = async (title) => {
         const titleData = {
             fields: {
-                title: todo.title,
+                title: title,
             },
         };
         const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
