@@ -1,0 +1,73 @@
+.listItem {
+    position: relative;
+    list-style-type: circle ;
+    padding: 0.25rem 2rem 0.25rem 0.25rem;
+    font-size: 1.2rem;
+    max-width: 100%;
+    width: 26em;
+    margin-left: 1.8rem;
+    margin-bottom: 0.5rem;
+    box-sizing: border-box;
+    min-height: 1rem;
+}
+
+.listItemContent {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-right: 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.todoText {
+    max-width: calc(100% - 5rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.removeButton{
+    position: absolute;
+    right: 0;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 1rem;
+    background-color: #f14e4e;
+    padding: 0.3rem 0.65rem;
+    margin-left: 1rem;
+    justify-self: right;
+    border-right: 3px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+.removeButton:hover{
+    color: #d10202;
+    background-color: #98fafa;
+    border: 0.125em solid #ff4500ff;
+    border-right: 3px solid #970101ff;
+    border-bottom: 3px solid #970101ff;
+}
+
+@media (max-width: 800px) {
+    .listItem {
+        font-size: 1.1rem;
+        padding: 0.6em;
+        width: calc(85% - 4rem);
+    }
+    .removeButton{
+        padding: 0.3rem 0.7rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .listItem {
+        font-size: 1rem;
+        padding: 0.5em;
+        width: calc(80% - 3rem);
+    }
+    .removeButton{
+        padding: 0.3rem 0.5rem;
+    }
+}
