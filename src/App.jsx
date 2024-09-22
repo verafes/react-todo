@@ -3,6 +3,7 @@ import './App.css'
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import listIcon from './img/list.png';
 
 function App() {
     // initialize state with empty arr and loading state
@@ -108,9 +109,13 @@ function App() {
             <Routes>
                 <Route path="/" element={
                     <>
-                        <h1>Todo List</h1>
+                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <img src={listIcon} alt="List Icon"
+                                 style={{width: '48px', height: '48px', marginRight: '16px'}}/>
+                            <h1>Todo List</h1>
+                        </div>
                         {isLoading ? (
-                            <p>Loading...</p>
+                            <p className="Loading">Loading...</p>
                         ) : (
                             <>
                                 <AddTodoForm onAddTodo={addTodo} todoList={todoList}/>
@@ -118,8 +123,8 @@ function App() {
                             </>
                         )}
                     </>
-                } />
-                <Route path="/new" element={<h1>New Todo List</h1>} />
+                }/>
+                <Route path="/new" element={<h1>New Todo List</h1>}/>
             </Routes>
         </BrowserRouter>
     )

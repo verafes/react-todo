@@ -1,4 +1,5 @@
 import {useRef, useEffect} from 'react';
+import style from "./InputWithLabel.module.css";
 
 // Reusable input field with label component
 function InputWithLabel({ id, type, name, value, onChange, children }) {
@@ -12,8 +13,9 @@ function InputWithLabel({ id, type, name, value, onChange, children }) {
 
     return (
         <>
-            <label htmlFor={id}>{children}</label>
+            <label htmlFor={id} className={style.label}>{children}</label>
             <input
+                className={style.inputField}
                 ref={inputRef}
                 id={id}
                 type={type}
