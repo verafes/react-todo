@@ -1,5 +1,13 @@
+.form {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
 .submitButton {
-  margin-left: 0.7em;
+  /*margin-left: 0.7em;*/
   padding: 0.6em 1.6em;
   outline: none;
   background: #98fafa;
@@ -10,6 +18,7 @@
   transition: background-color 0.3s;
   border-right: 3px solid rgba(0, 0, 0, 0.3);
   border-bottom: 3px solid rgba(0, 0, 0, 0.3);
+  width: auto;
 }
 
 .submitButton:hover {
@@ -17,4 +26,32 @@
   background-color: #18526d;
   border-right: 3px solid rgba(0, 0, 0, 0.5);
   border-bottom: 3px solid rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 800px) {
+  .formContainer {
+    align-items: center;
+
+  }
+  .submitButton {
+    padding: 0.45em 1.6em;
+  }
+}
+
+@media (max-width: 640px) {
+  .submitButton {
+    padding: 0.35em 1.5em;
+  }
+}
+
+@media (max-width: 415px) {
+  .form {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 375px) {
+  .form {
+    width: 90vw;
+  }
 }

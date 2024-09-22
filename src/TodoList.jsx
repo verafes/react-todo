@@ -1,5 +1,5 @@
 import TodoListItem from './TodoListItem.jsx';
-import style from './TodoListItem.module.css';
+import style from './TodoList.module.css';
 
 // mapping over todoList array
 function TodoList({ todoList, onRemoveTodo }) {
@@ -10,7 +10,7 @@ function TodoList({ todoList, onRemoveTodo }) {
                     key={item.id}
                     todo={item}
                     onRemoveTodo={onRemoveTodo}
-                    className={style.todoListItem}
+                    // className={style.todoListItem}
                 />
             ))}
         </ul>

@@ -3,8 +3,8 @@
     list-style-type: circle ;
     padding: 0.25rem 2rem 0.25rem 0.25rem;
     font-size: 1.2rem;
-    max-width: 100%;
-    width: 26em;
+    width: 50vw;
+    max-width: 27em;
     margin-left: 1.8rem;
     margin-bottom: 0.5rem;
     box-sizing: border-box;
@@ -21,7 +21,7 @@
 }
 
 .todoText {
-    max-width: calc(100% - 5rem);
+    max-width: calc(100% - 4rem);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
@@ -53,8 +53,10 @@
 @media (max-width: 800px) {
     .listItem {
         font-size: 1.1rem;
-        padding: 0.6em;
-        width: calc(85% - 4rem);
+        /*padding: 0.6em;*/
+        /*width: calc(85% - 4rem);*/
+        width: 58vw;
+        max-width: 100%;
     }
     .removeButton{
         padding: 0.3rem 0.7rem;
@@ -63,11 +65,12 @@
 
 @media (max-width: 640px) {
     .listItem {
-        font-size: 1rem;
-        padding: 0.5em;
-        width: calc(80% - 3rem);
+        font-size: 1em;
+        width: 100%;
+        max-width: 68vw;
     }
     .removeButton{
         padding: 0.3rem 0.5rem;
+        margin: 0 0 0.65rem 0.7rem;
     }
 }
