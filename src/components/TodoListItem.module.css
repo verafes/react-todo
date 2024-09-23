@@ -53,8 +53,6 @@
 @media (max-width: 800px) {
     .listItem {
         font-size: 1.1rem;
-        /*padding: 0.6em;*/
-        /*width: calc(85% - 4rem);*/
         width: 58vw;
         max-width: 100%;
     }
@@ -72,5 +70,16 @@
     .removeButton{
         padding: 0.3rem 0.5rem;
         margin: 0 0 0.65rem 0.7rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .listItem {
+        width: 100%;
+        padding: 0.5rem 0;
+        font-size: 0.9rem;
+    }
+    .removeButton{
+        font-size: 0.8rem;
     }
 }
