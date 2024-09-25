@@ -1,6 +1,5 @@
 import TodoListItem from './TodoListItem.jsx';
 import PropTypes from "prop-types";
-import TodoContainer from "./TodoContainer.jsx";
 import style from './TodoList.module.css';
 
 // mapping over todoList array
