@@ -5,3 +5,9 @@
 .todoListItem {
   margin-bottom: 0.5rem;
 }
+
+@media (max-width: 400px) {
+  .todoList {
+    margin-left: 0;
+  }
+}

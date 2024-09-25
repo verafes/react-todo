@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import style from './TodoListItem.module.css';
 
 // Component to display a single todo item and remove item button
@@ -17,5 +18,10 @@ function TodoListItem({ todo, onRemoveTodo }) {
         </li>
     );
 }
+
+TodoListItem.propTypes = {
+    todo: PropTypes.object,
+    onRemoveTodo: PropTypes.func,
+};
 
 export default TodoListItem;

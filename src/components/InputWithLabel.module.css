@@ -1,9 +1,12 @@
 .inputField {
   padding: 0.75em;
+  margin: 0.5em 0.5em;
   color: #18526d;
   font-size: 1em;
-  width: 25em;
-  max-width: 100%;
+  /*width: 25em;*/
+  /*max-width: 100%;*/
+  width: 100%;
+  max-width: 26em;
   border: none;
   outline: none;
   border-radius: 0.3rem;
@@ -25,6 +28,14 @@ label {
 @media (max-width: 640px) {
   .inputField {
     padding: 0.5em;
-    width: 40vw;
+    width: 48vw;
+  }
+}
+
+@media (max-width: 375px) {
+  .inputField {
+    padding: 0.5em;
+    font-size: 0.85em;
+    width: 45vw;
   }
 }

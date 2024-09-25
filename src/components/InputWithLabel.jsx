@@ -1,4 +1,5 @@
 import {useRef, useEffect} from 'react';
+import PropTypes from "prop-types";
 import style from "./InputWithLabel.module.css";
 
 // Reusable input field with label component
@@ -26,5 +27,14 @@ function InputWithLabel({ id, type, name, value, onChange, children }) {
         </>
     );
 }
+
+InputWithLabel.propTypes = {
+    children: PropTypes.object,
+    id: PropTypes.string,
+    type: PropTypes.string,
+    name: PropTypes.string,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+};
 
 export default InputWithLabel;
