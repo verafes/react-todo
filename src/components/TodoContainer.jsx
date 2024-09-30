@@ -19,8 +19,8 @@ function TodoContainer({ tableName, baseId, apiKey }) {
             },
         };
 
-        const url = `https://api.airtable.com/v0/${baseId}/${tableName}??view=Grid%20view&sort[0][field]=title&sort[0][direction]=asc`;
-        console.log("Request URL:", url);
+        const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
+
         try {
             const response = await fetch(url, options);
 
@@ -29,6 +29,16 @@ function TodoContainer({ tableName, baseId, apiKey }) {
             }
 
             const data = await response.json();
+
+            // Sort the records based on the Title field
+            const sortedTodos = data.records.sort((a, b) => {
+                const titleA = a.fields.title.toLowerCase();
+                const titleB = b.fields.title.toLowerCase();
+
+                if (titleA < titleB) return -1;
+                if (titleA > titleB) return 1;
+                return 0;
+            });
 
             // Transforming Airtable records into the todoList format
             const todos = data.records.map(todo => ({
