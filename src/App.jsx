@@ -5,9 +5,6 @@ import { apiKey, baseId, tableName } from '../config.js';
 
 
 function App() {
-    console.log('Base ID:', baseId);
-    console.log('API Key:', apiKey);
-    console.log('Table Name:', tableName);
     return (
         <BrowserRouter>
             <Routes>

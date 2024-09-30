@@ -19,8 +19,8 @@ function TodoContainer({ tableName, baseId, apiKey }) {
             },
         };
 
-        const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
-
+        const url = `https://api.airtable.com/v0/${baseId}/${tableName}??view=Grid%20view&sort[0][field]=title&sort[0][direction]=asc`;
+        console.log("Request URL:", url);
         try {
             const response = await fetch(url, options);
 
