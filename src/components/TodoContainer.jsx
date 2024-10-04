@@ -14,27 +14,35 @@ function TodoContainer({ tableName, baseId, apiKey }) {
     const [sortField, setSortField] = useState("asc");
     const [sortOrder, setSortOrder] = useState("title");
 
+    // function comparator for sorting numerically, mix numeric-string, and alphabetically
+    const sortComparator = (a, b, ascending) => {
+        const titleA = a.title.toLowerCase();
+        const titleB = b.title.toLowerCase();
+        const isNumericA = !isNaN(titleA);
+        const isNumericB = !isNaN(titleB);
+
+        if (isNumericA && isNumericB) {
+            return ascending ? titleA - titleB : titleB - titleA;
+        } else if (isNumericA) {
+            return ascending ? -1 : 1;
+        } else if (isNumericB) {
+            return ascending ? 1 : -1;
+        } else {
+            return ascending ? (titleA < titleB ? -1 : titleA > titleB ? 1 : 0) : (titleA > titleB ? -1 : titleA < titleB ? 1 : 0);
+        }
+    };
+
     // sort by title (A-Z)
     const sortByTitleAsc = () => {
-        const sortTitles = (a, b) => {
-            const titleA = a.title.toLowerCase();
-            const titleB = b.title.toLowerCase();
-            return titleA < titleB ? -1 : titleA < titleB ? 1 : 0;
-        };
         const newTodoList = [...todoList];
-        newTodoList.sort(sortTitles);
+        newTodoList.sort((a, b) => sortComparator(a, b, true));
         setTodoList(newTodoList);
     };
 
     // sort by title (Z-A)
     const sortByTitleDesc = () => {
-        const sortTitles = (a, b) => {
-            const titleA = a.title.toLowerCase();
-            const titleB = b.title.toLowerCase();
-            return titleA > titleB ? -1 : titleA < titleB ? 1 : 0;
-        };
         const newTodoList = [...todoList];
-        newTodoList.sort(sortTitles);
+        newTodoList.sort((a, b) => sortComparator(a, b, false));
         setTodoList(newTodoList);
     };
 
