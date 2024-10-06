@@ -110,8 +110,9 @@ function TodoContainer({ tableName, baseId, apiKey }) {
 
     // hook to fetch data from API
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchData(tableName);
+        console.log("fetchdata", fetchData(tableName));
+    }, [tableName]);
 
     // posting a new todo to the list
     const addTodo = async (title) => {
@@ -186,10 +187,9 @@ function TodoContainer({ tableName, baseId, apiKey }) {
 
     return (
         <>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <img src={listIcon} alt="List Icon"
-                     style={{width: '48px', height: '48px', marginRight: '16px'}}/>
-                <h1>Todo List</h1>
+            <div className={style.container}>
+                <img src={listIcon} alt="List Icon" className={style.icon}/>
+                <h1>{tableName}</h1>
             </div>
             {isLoading ? (
                 <p className="Loading">Loading...</p>

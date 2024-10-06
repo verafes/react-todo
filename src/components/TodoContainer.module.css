@@ -1,3 +1,14 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon {
+    width: 48px;
+    height: 48px;
+    margin-right: 1rem;
+    margin-bottom: 0.5em;
+}
 .sortButtonContainer {
     display: flex;
     justify-content: center;
