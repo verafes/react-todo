@@ -16,9 +16,10 @@
 .navList {
     list-style-type: none;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     margin: 0;
     padding: 0;
+    width: 100%;
 }
 
 .navItem {
@@ -33,4 +34,48 @@
 
 .navItem a:hover {
     text-decoration: underline;
+}
+
+/* hamburger menu hidden by default */
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+   /*.container {*/
+   /*     margin-top: 5rem;*/
+   /* }*/
+    .navBar {
+        justify-content: space-between;
+    }
+    .hamburger {
+        display: block;
+        width: 2em;
+        height: 2em;
+    }
+
+    .navList {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #f8f9fa;
+        position: absolute;
+        top: 3rem;
+        left: 0;
+        border: 1px solid #dee2e6;
+    }
+
+    .navList.open {
+        display: flex;
+    }
+
+    .navItem {
+        margin: 0.5rem 0;
+    }
+
+    .navItem a {
+        margin: 0;
+        padding: 0.5rem 1rem;
+    }
 }
