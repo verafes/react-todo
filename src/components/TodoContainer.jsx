@@ -10,6 +10,7 @@ function TodoContainer({ tableName, baseId, apiKey }) {
     // initialize state with empty arr and loading state
     const [todoList, setTodoList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [currentTodoList, setCurrentTodoList] = useState(tableName);
 
     const [sortField, setSortField] = useState("asc");
     const [sortOrder, setSortOrder] = useState("title");
@@ -94,10 +95,13 @@ function TodoContainer({ tableName, baseId, apiKey }) {
             const data = await response.json();
 
             // Transforming Airtable records into the todoList format
-            const todos = data.records.map(todo => ({
-                id: todo.id,
-                title: todo.fields.title,
-                createdTime: todo.createdTime,
+            const todos = data.records
+                .filter(todo => todo.fields.list === currentTodoList)
+                .map(todo => ({
+                    id: todo.id,
+                    title: todo.fields.title,
+                    createdTime: todo.createdTime,
+                    list: todo.fields.list,
             }));
 
             // Updating state with the fetched todos
@@ -111,7 +115,6 @@ function TodoContainer({ tableName, baseId, apiKey }) {
     // hook to fetch data from API
     useEffect(() => {
         fetchData(tableName);
-        console.log("fetchdata", fetchData(tableName));
     }, [tableName]);
 
     // posting a new todo to the list
@@ -119,6 +122,7 @@ function TodoContainer({ tableName, baseId, apiKey }) {
         const titleData = {
             fields: {
                 title: title,
+                list: currentTodoList,
             },
         };
         const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
@@ -137,7 +141,12 @@ function TodoContainer({ tableName, baseId, apiKey }) {
                 throw new Error(`Error has occurred: ${response.status}`);
             }
             const todo = await response.json();
-            const newTodo = { id: todo.id, title: todo.fields.title };
+            const newTodo = {
+                id: todo.id,
+                title: todo.fields.title,
+                createdTime: todo.createdTime,
+                list: todo.fields.list,
+            };
             setTodoList([...todoList, newTodo]);
         } catch (error) {
             console.log(error.message);
@@ -189,7 +198,7 @@ function TodoContainer({ tableName, baseId, apiKey }) {
         <>
             <div className={style.container}>
                 <img src={listIcon} alt="List Icon" className={style.icon}/>
-                <h1>{tableName}</h1>
+                <h1>{currentTodoList}</h1>
             </div>
             {isLoading ? (
                 <p className="Loading">Loading...</p>
