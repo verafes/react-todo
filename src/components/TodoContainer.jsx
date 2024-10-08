@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import listIcon from "../img/list.png";
 import AddTodoForm from "./AddTodoForm.jsx";
 import TodoList from "./TodoList.jsx";
+import SortButtons from "./SortButtons.jsx";
 import PropTypes from "prop-types";
 import style from './TodoContainer.module.css';
 
@@ -33,43 +34,28 @@ function TodoContainer({ tableName, baseId, apiKey }) {
         }
     };
 
-    // sort by title (A-Z)
-    const sortByTitleAsc = () => {
-        const newTodoList = [...todoList];
-        newTodoList.sort((a, b) => sortComparator(a, b, true));
-        setTodoList(newTodoList);
-    };
+    // Function to handle Sort Toggle
+    const handleSortToggle = (field) => {
+        let newSortOrder = sortOrder;
+        if (sortField === field) {
+            newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+        } else {
+            newSortOrder = "asc";
+        }
 
-    // sort by title (Z-A)
-    const sortByTitleDesc = () => {
-        const newTodoList = [...todoList];
-        newTodoList.sort((a, b) => sortComparator(a, b, false));
-        setTodoList(newTodoList);
-    };
-
-    // sort by createdTime (A-Z)
-    const onSortByDateAsc = () => {
-        const sortDate = (a, b) => {
-            const dateA = new Date(a.createdTime);
-            const dateB = new Date(b.createdTime);
-            return dateA - dateB; // Ascending order
-        };
+        setSortField(field);
+        setSortOrder(newSortOrder);
 
         const newTodoList = [...todoList];
-        newTodoList.sort(sortDate);
-        setTodoList(newTodoList);
-    };
-
-    // sort by createdTime (Z-A)
-    const onSortByDateDesc = () => {
-        const sortDate = (a, b) => {
-            const dateA = new Date(a.createdTime);
-            const dateB = new Date(b.createdTime);
-            return dateB - dateA; // Descending order
-        };
-
-        const newTodoList = [...todoList];
-        newTodoList.sort(sortDate);
+        if (field === "title") {
+            newTodoList.sort((a, b) => sortComparator(a, b, newSortOrder === "asc"));
+        } else if (field === "createdTime") {
+            newTodoList.sort((a, b) => {
+                const dateA = new Date(a.createdTime);
+                const dateB = new Date(b.createdTime);
+                return newSortOrder === "asc" ? dateA - dateB : dateB - dateA;
+            });
+        }
         setTodoList(newTodoList);
     };
 
@@ -178,22 +164,6 @@ function TodoContainer({ tableName, baseId, apiKey }) {
         }
     };
 
-    // Function to handle Sort Toggle
-    const handleSortToggle = (field) => {
-        if (sortField === field) {
-            setSortOrder(prev => (prev === "asc" ? "desc" : "asc"));
-        } else {
-            setSortField(field);
-            setSortOrder("asc");
-        }
-
-        if (field === "title") {
-            sortOrder === "asc" ? sortByTitleAsc() : sortByTitleDesc();
-        } else if (field === "createdTime") {
-            sortOrder === "asc" ? onSortByDateAsc() : onSortByDateDesc();
-        }
-    };
-
     return (
         <>
             <div className={style.container}>
@@ -205,14 +175,11 @@ function TodoContainer({ tableName, baseId, apiKey }) {
             ) : (
                 <>
                     <AddTodoForm onAddTodo={addTodo} todoList={todoList}/>
-                    <div className={style.sortButtonContainer}>
-                        <button onClick={() => handleSortToggle("title")}>
-                            Sort by Title {sortField === "title" ? (sortOrder === "asc" ? "▲" : "▼") : ""}
-                        </button>
-                        <button onClick={() => handleSortToggle("createdTime")}>
-                            Sort by Date {sortField === "createdTime" ? (sortOrder === "asc" ? "▲" : "▼") : ""}
-                        </button>
-                    </div>
+                    <SortButtons
+                        sortField={sortField}
+                        sortOrder={sortOrder}
+                        handleSortToggle={handleSortToggle}
+                    />
                     <TodoList
                         todoList={todoList}
                         onRemoveTodo={removeTodo}/>
