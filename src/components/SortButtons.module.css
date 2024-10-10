@@ -1,0 +1,10 @@
+.sortButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.4rem;
+    width: 100%;
+}
+button {
+    background-color: #98fafa;
+    font-size: 0.9rem;
+}

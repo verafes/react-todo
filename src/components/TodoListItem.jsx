@@ -1,12 +1,25 @@
+import { useState } from 'react';
 import PropTypes from "prop-types";
 import style from './TodoListItem.module.css';
 
 // Component to display a single todo item and remove item button
 function TodoListItem({ todo, onRemoveTodo }) {
+    const [isCompleted, setIsCompleted] = useState(false);
+
+    // Function to toggle the completion status of the todo item
+    const handleToggleCompletion = () => {
+        setIsCompleted(!isCompleted);
+    };
+
     return (
         <li className={style.listItem}>
             <div className={style.listItemContent}>
-                <span className={style.todoText}>{todo.title}</span>
+                <span
+                    className={`${style.todoText} ${isCompleted ? style.completed : ''}`}
+                    onClick={handleToggleCompletion}
+                >
+                    {todo.title}
+                </span>
                 <button
                     className={style.removeButton}
                     type="button"
