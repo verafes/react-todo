@@ -1,66 +1,62 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import listIcon from "../img/list.png";
 import AddTodoForm from "./AddTodoForm.jsx";
 import TodoList from "./TodoList.jsx";
+import SortButtons from "./SortButtons.jsx";
 import PropTypes from "prop-types";
-import style from './TodoContainer.module.css';
+import styles from './TodoContainer.module.css';
 
 
 function TodoContainer({ tableName, baseId, apiKey }) {
     // initialize state with empty arr and loading state
+    const { listName } = useParams();
     const [todoList, setTodoList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const [sortField, setSortField] = useState("asc");
     const [sortOrder, setSortOrder] = useState("title");
 
-    // sort by title (A-Z)
-    const sortByTitleAsc = () => {
-        const sortTitles = (a, b) => {
-            const titleA = a.title.toLowerCase();
-            const titleB = b.title.toLowerCase();
-            return titleA < titleB ? -1 : titleA < titleB ? 1 : 0;
-        };
-        const newTodoList = [...todoList];
-        newTodoList.sort(sortTitles);
-        setTodoList(newTodoList);
+    // function comparator for sorting numerically, mix numeric-string, and alphabetically
+    const sortComparator = (a, b, ascending) => {
+        const titleA = a.title.toLowerCase();
+        const titleB = b.title.toLowerCase();
+        const isNumericA = !isNaN(titleA);
+        const isNumericB = !isNaN(titleB);
+
+        if (isNumericA && isNumericB) {
+            return ascending ? titleA - titleB : titleB - titleA;
+        } else if (isNumericA) {
+            return ascending ? -1 : 1;
+        } else if (isNumericB) {
+            return ascending ? 1 : -1;
+        } else {
+            return ascending ? (titleA < titleB ? -1 : titleA > titleB ? 1 : 0) : (titleA > titleB ? -1 : titleA < titleB ? 1 : 0);
+        }
     };
 
-    // sort by title (Z-A)
-    const sortByTitleDesc = () => {
-        const sortTitles = (a, b) => {
-            const titleA = a.title.toLowerCase();
-            const titleB = b.title.toLowerCase();
-            return titleA > titleB ? -1 : titleA < titleB ? 1 : 0;
-        };
-        const newTodoList = [...todoList];
-        newTodoList.sort(sortTitles);
-        setTodoList(newTodoList);
-    };
+    // Function to handle Sort Toggle
+    const handleSortToggle = (field) => {
+        let newSortOrder = sortOrder;
+        if (sortField === field) {
+            newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+        } else {
+            newSortOrder = "asc";
+        }
 
-    // sort by createdTime (A-Z)
-    const onSortByDateAsc = () => {
-        const sortDate = (a, b) => {
-            const dateA = new Date(a.createdTime);
-            const dateB = new Date(b.createdTime);
-            return dateA - dateB; // Ascending order
-        };
+        setSortField(field);
+        setSortOrder(newSortOrder);
 
         const newTodoList = [...todoList];
-        newTodoList.sort(sortDate);
-        setTodoList(newTodoList);
-    };
-
-    // sort by createdTime (Z-A)
-    const onSortByDateDesc = () => {
-        const sortDate = (a, b) => {
-            const dateA = new Date(a.createdTime);
-            const dateB = new Date(b.createdTime);
-            return dateB - dateA; // Descending order
-        };
-
-        const newTodoList = [...todoList];
-        newTodoList.sort(sortDate);
+        if (field === "title") {
+            newTodoList.sort((a, b) => sortComparator(a, b, newSortOrder === "asc"));
+        } else if (field === "createdTime") {
+            newTodoList.sort((a, b) => {
+                const dateA = new Date(a.createdTime);
+                const dateB = new Date(b.createdTime);
+                return newSortOrder === "asc" ? dateA - dateB : dateB - dateA;
+            });
+        }
         setTodoList(newTodoList);
     };
 
@@ -86,10 +82,13 @@ function TodoContainer({ tableName, baseId, apiKey }) {
             const data = await response.json();
 
             // Transforming Airtable records into the todoList format
-            const todos = data.records.map(todo => ({
-                id: todo.id,
-                title: todo.fields.title,
-                createdTime: todo.createdTime,
+            const todos = data.records
+                .filter(todo => todo.fields.list === listName)
+                .map(todo => ({
+                    id: todo.id,
+                    title: todo.fields.title,
+                    createdTime: todo.createdTime,
+                    list: todo.fields.list,
             }));
 
             // Updating state with the fetched todos
@@ -103,13 +102,14 @@ function TodoContainer({ tableName, baseId, apiKey }) {
     // hook to fetch data from API
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [listName]);
 
     // posting a new todo to the list
     const addTodo = async (title) => {
         const titleData = {
             fields: {
                 title: title,
+                list: listName,
             },
         };
         const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
@@ -128,7 +128,12 @@ function TodoContainer({ tableName, baseId, apiKey }) {
                 throw new Error(`Error has occurred: ${response.status}`);
             }
             const todo = await response.json();
-            const newTodo = { id: todo.id, title: todo.fields.title };
+            const newTodo = {
+                id: todo.id,
+                title: todo.fields.title,
+                createdTime: todo.createdTime,
+                list: todo.fields.list,
+            };
             setTodoList([...todoList, newTodo]);
         } catch (error) {
             console.log(error.message);
@@ -160,42 +165,22 @@ function TodoContainer({ tableName, baseId, apiKey }) {
         }
     };
 
-    // Function to handle Sort Toggle
-    const handleSortToggle = (field) => {
-        if (sortField === field) {
-            setSortOrder(prev => (prev === "asc" ? "desc" : "asc"));
-        } else {
-            setSortField(field);
-            setSortOrder("asc");
-        }
-
-        if (field === "title") {
-            sortOrder === "asc" ? sortByTitleAsc() : sortByTitleDesc();
-        } else if (field === "createdTime") {
-            sortOrder === "asc" ? onSortByDateAsc() : onSortByDateDesc();
-        }
-    };
-
     return (
         <>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <img src={listIcon} alt="List Icon"
-                     style={{width: '48px', height: '48px', marginRight: '16px'}}/>
-                <h1>Todo List</h1>
+            <div className={styles.container}>
+                <img src={listIcon} alt="List Icon" className={styles.icon}/>
+                <h1>{listName}</h1>
             </div>
             {isLoading ? (
                 <p className="Loading">Loading...</p>
             ) : (
                 <>
                     <AddTodoForm onAddTodo={addTodo} todoList={todoList}/>
-                    <div className={style.sortButtonContainer}>
-                        <button onClick={() => handleSortToggle("title")}>
-                            Sort by Title {sortField === "title" ? (sortOrder === "asc" ? "▲" : "▼") : ""}
-                        </button>
-                        <button onClick={() => handleSortToggle("createdTime")}>
-                            Sort by Date {sortField === "createdTime" ? (sortOrder === "asc" ? "▲" : "▼") : ""}
-                        </button>
-                    </div>
+                    <SortButtons
+                        sortField={sortField}
+                        sortOrder={sortOrder}
+                        handleSortToggle={handleSortToggle}
+                    />
                     <TodoList
                         todoList={todoList}
                         onRemoveTodo={removeTodo}/>

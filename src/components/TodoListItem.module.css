@@ -27,6 +27,10 @@
     white-space: normal;
 }
 
+.completed {
+    text-decoration: line-through;
+}
+
 .removeButton{
     position: absolute;
     right: 0;
