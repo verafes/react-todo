@@ -2,9 +2,11 @@ import './App.css'
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import TodoContainer from './components/TodoContainer.jsx'
 import NavBar from './components/NavBar.jsx';
+import HomePage from './pages/HomePage';
 import {apiKey, baseId, tableName} from '../config.js';
 import listIcon from "./img/list.png";
 import style from "./components/TodoContainer.module.css";
+import TodoListSelector from './components/TodoListSelector';
 
 
 function App() {
@@ -12,16 +14,15 @@ function App() {
         <BrowserRouter>
             <NavBar/>
             <Routes>
-                <Route exact path="/" element={
-                    <div className="home-container">
-                        <h1>Welcome <br/> to the Todo App</h1>
-                        <img src={listIcon} alt="List Icon" className={style.icon}/>
-                        <p style={{fontSize: '1.5em', textAlign: 'center'}}>Create, edit and manage <br/>your todo
-                            lists.</p>
-                    </div>
-                }/>
+                <Route exact path="/" element={<HomePage />} />
+                <Route path="/todos/:listName" element={
+                    < TodoContainer
+                        tableName={tableName}
+                        baseId={baseId}
+                        apiKey={apiKey}/>
+                } />
                 <Route exact path="/mylists" element={
-                    <TodoContainer
+                    <TodoListSelector
                             tableName={tableName}
                             baseId={baseId}
                             apiKey={apiKey}/>

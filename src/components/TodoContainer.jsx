@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import listIcon from "../img/list.png";
 import AddTodoForm from "./AddTodoForm.jsx";
 import TodoList from "./TodoList.jsx";
 import SortButtons from "./SortButtons.jsx";
 import PropTypes from "prop-types";
-import style from './TodoContainer.module.css';
+import styles from './TodoContainer.module.css';
 
 
 function TodoContainer({ tableName, baseId, apiKey }) {
     // initialize state with empty arr and loading state
+    const { listName } = useParams();
     const [todoList, setTodoList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [currentTodoList, setCurrentTodoList] = useState(tableName);
 
     const [sortField, setSortField] = useState("asc");
     const [sortOrder, setSortOrder] = useState("title");
@@ -82,7 +83,7 @@ function TodoContainer({ tableName, baseId, apiKey }) {
 
             // Transforming Airtable records into the todoList format
             const todos = data.records
-                .filter(todo => todo.fields.list === currentTodoList)
+                .filter(todo => todo.fields.list === listName)
                 .map(todo => ({
                     id: todo.id,
                     title: todo.fields.title,
@@ -100,15 +101,15 @@ function TodoContainer({ tableName, baseId, apiKey }) {
 
     // hook to fetch data from API
     useEffect(() => {
-        fetchData(tableName);
-    }, [tableName]);
+        fetchData();
+    }, [listName]);
 
     // posting a new todo to the list
     const addTodo = async (title) => {
         const titleData = {
             fields: {
                 title: title,
-                list: currentTodoList,
+                list: listName,
             },
         };
         const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
@@ -166,9 +167,9 @@ function TodoContainer({ tableName, baseId, apiKey }) {
 
     return (
         <>
-            <div className={style.container}>
-                <img src={listIcon} alt="List Icon" className={style.icon}/>
-                <h1>{currentTodoList}</h1>
+            <div className={styles.container}>
+                <img src={listIcon} alt="List Icon" className={styles.icon}/>
+                <h1>{listName}</h1>
             </div>
             {isLoading ? (
                 <p className="Loading">Loading...</p>

@@ -18,7 +18,7 @@ function NavBar() {
 
     // Check if the screen width is mobile size
     const isMobile = window.innerWidth <= 768;
-
+    const listName = "Todo List";
     return (
         <nav className={style.navBar}>
             {isMobile && (
