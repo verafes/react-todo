@@ -13,6 +13,7 @@ function TodoContainer({ tableName, baseId, apiKey }) {
     const { listName } = useParams();
     const [todoList, setTodoList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isListLong, setIsListLong] = useState(false);
 
     const [sortField, setSortField] = useState("asc");
     const [sortOrder, setSortOrder] = useState("title");
@@ -89,11 +90,13 @@ function TodoContainer({ tableName, baseId, apiKey }) {
                     title: todo.fields.title,
                     createdTime: todo.createdTime,
                     list: todo.fields.list,
-            }));
+                }));
 
             // Updating state with the fetched todos
             setTodoList(todos);
             setIsLoading(false);
+
+            setIsListLong(todos.length > 15)
         } catch (error) {
             console.error(error.message);
         }
@@ -135,6 +138,8 @@ function TodoContainer({ tableName, baseId, apiKey }) {
                 list: todo.fields.list,
             };
             setTodoList([...todoList, newTodo]);
+
+            setIsListLong(todoList.length + 1 > 15);
         } catch (error) {
             console.log(error.message);
             return null;
@@ -160,6 +165,8 @@ function TodoContainer({ tableName, baseId, apiKey }) {
                 return id !== todo.id;
             });
             setTodoList(newTodoList);
+
+            setIsListLong(newTodoList.length > 15);
         } catch (error) {
             console.log(error.message);
         }
@@ -167,7 +174,7 @@ function TodoContainer({ tableName, baseId, apiKey }) {
 
     return (
         <>
-            <div className={styles.container}>
+            <div className={`${styles.container} ${isListLong ? styles.longListPadding : ''}`}>
                 <img src={listIcon} alt="List Icon" className={styles.icon}/>
                 <h1>{listName}</h1>
             </div>
