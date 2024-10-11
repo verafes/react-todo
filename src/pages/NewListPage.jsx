@@ -32,6 +32,10 @@ function NewListPage() {
                 <Link to="/mylists" className="view-lists-link">
                     View My Todo Lists
                 </Link>
+                <br/>
+                <Link to="/nonexistent" className="view-lists-link">
+                    Go to 404 Page
+                </Link>
             </div>
         </div>
     );

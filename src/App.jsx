@@ -4,6 +4,7 @@ import TodoContainer from './components/TodoContainer.jsx'
 import NavBar from './components/NavBar.jsx';
 import HomePage from './pages/HomePage';
 import NewListPage from './pages/NewListPage';
+import NotFoundPage from './pages/NotFoundPage';
 import {apiKey, baseId, tableName} from '../config.js';
 import TodoListSelector from './components/TodoListSelector';
 
@@ -14,6 +15,7 @@ function App() {
             <NavBar/>
             <Routes>
                 <Route exact path="/" element={<HomePage />} />
+                <Route path="*" element={<NotFoundPage />} />
                 <Route path="/todos/:listName" element={
                     < TodoContainer
                         tableName={tableName}
