@@ -179,7 +179,9 @@ function TodoContainer({ tableName, baseId, apiKey }) {
                 <h1>{listName}</h1>
             </div>
             {isLoading ? (
-                <p className="Loading">Loading...</p>
+                <p className="Loading" role="alert" aria-live="assertive">
+                    Loading...
+                </p>
             ) : (
                 <>
                     <AddTodoForm onAddTodo={addTodo} todoList={todoList}/>

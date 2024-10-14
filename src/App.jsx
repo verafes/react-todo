@@ -14,24 +14,26 @@ function App() {
     return (
         <BrowserRouter>
             <NavBar/>
-            <Routes>
-                <Route exact path="/" element={<HomePage />} />
-                <Route path="*" element={<NotFoundPage />} />
-                <Route path="/todos/:listName" element={
-                    < TodoContainer
-                        tableName={tableName}
-                        baseId={baseId}
-                        apiKey={apiKey}/>
-                } />
-                <Route exact path="/mylists" element={
-                    <TodoListSelector
+            <main>
+                <Routes>
+                    <Route exact path="/" element={<HomePage/>}/>
+                    <Route path="*" element={<NotFoundPage/>}/>
+                    <Route path="/todos/:listName" element={
+                        < TodoContainer
                             tableName={tableName}
                             baseId={baseId}
                             apiKey={apiKey}/>
-                }/>
-                <Route path="/new" element={<NewListPage />} />
-            </Routes>
-            <Footer />
+                    }/>
+                    <Route exact path="/mylists" element={
+                        <TodoListSelector
+                            tableName={tableName}
+                            baseId={baseId}
+                            apiKey={apiKey}/>
+                    }/>
+                    <Route path="/new" element={<NewListPage/>}/>
+                </Routes>
+            </main>
+            <Footer/>
         </BrowserRouter>
     )
 }

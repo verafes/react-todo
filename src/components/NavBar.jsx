@@ -40,7 +40,7 @@ function NavBar() {
                     onClick={toggleMenu}
                 />
             )}
-            <ul className={`${style.navList} ${isOpen ? style.open : ''}`}>
+            <ul className={`${style.navList} ${isOpen ? style.open : ''}`} >
                 <li className={style.navItem} onClick={handleLinkClick}>
                     <Link to="/">Home</Link>
                 </li>

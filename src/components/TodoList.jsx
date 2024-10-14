@@ -5,7 +5,7 @@ import style from './TodoList.module.css';
 // mapping over todoList array
 function TodoList({ todoList, onRemoveTodo }) {
     return (
-        <ul className={style.todoList}>
+        <ul className={style.todoList} role="list" aria-label="Todo List">
             {todoList.map((item) => (
                 <TodoListItem
                     key={item.id}

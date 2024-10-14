@@ -65,7 +65,10 @@ function TodoListSelector({ tableName, baseId, apiKey }) {
                         {todoLists.map(list => (
                             <li key={list} className={selectorStyles.listsItem}>
                                 <a className={selectorStyles.link}
-                                   onClick={() => handleListClick(list)}>
+                                   aria-label={`Navigate to the todo list: ${list}`}
+                                   onClick={() => handleListClick(list)}
+                                   role="link"
+                                >
                                     {list}
                                 </a>
                             </li>

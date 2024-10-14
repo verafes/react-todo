@@ -34,6 +34,8 @@ function NewListPage() {
                             className={inputStyles.inputField}
                             value={listName}
                             onChange={(e) => setListName(e.target.value)}
+                            aria-label="Name of the new todo list"
+                            required
                         />
                         <button
                             type="submit"
@@ -43,11 +45,11 @@ function NewListPage() {
                         </button>
                     </div>
                 </form>
-                <Link to="/mylists" className="view-lists-link">
+                <Link to="/mylists" className="view-lists-link" aria-label="View my todo lists">
                     View My Todo Lists
                 </Link>
                 <br/>
-                <Link to="/nonexistent" className="view-lists-link">
+                <Link to="/nonexistent" className="view-lists-link" aria-label="Go to 404 page example">
                     Go to 404 Page
                 </Link>
             </div>

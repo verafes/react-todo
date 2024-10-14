@@ -11,7 +11,7 @@ function NotFoundPage() {
                 <img src={listIcon} alt="List Icon" className={styles.icon}/>
             </div>
             <div >
-                <Link to="/mylists" className="view-lists-link">
+                <Link to="/mylists" className="view-lists-link" aria-label="View my todo lists">
                     View My Todo lists
                 </Link>
             </div>

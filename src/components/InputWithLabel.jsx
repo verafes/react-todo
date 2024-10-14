@@ -23,18 +23,19 @@ function InputWithLabel({ id, type, name, value, onChange, children }) {
                 name={name}
                 value={value}
                 onChange={onChange}
+                aria-label={children}
             />
         </>
     );
 }
 
 InputWithLabel.propTypes = {
-    children: PropTypes.object,
-    id: PropTypes.string,
+    children: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
     type: PropTypes.string,
-    name: PropTypes.string,
-    value: PropTypes.string,
-    onChange: PropTypes.func,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
 };
 
 export default InputWithLabel;
