@@ -21,7 +21,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  padding: 0;
+  padding: 0 0 2.5rem 0;
   margin: 0;
 }
 
@@ -31,9 +31,11 @@ body {
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -51,6 +53,7 @@ h1 {
   align-items: center;
   justify-content: center;
  }
+
 button {
   border-radius: 0.3rem;
   border: 1px solid transparent;

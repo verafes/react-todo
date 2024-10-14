@@ -1,10 +1,11 @@
 import {Link} from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import style from './NavBar.module.css';
 import HamburgerIcon from '../img/hamburger-menu.svg';
 
 function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
     // Toggle the menu state
     const toggleMenu = () => {
@@ -16,9 +17,19 @@ function NavBar() {
         setIsOpen(false);
     };
 
-    // Check if the screen width is mobile size
-    const isMobile = window.innerWidth <= 768;
-    const listName = "Todo List";
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+
     return (
         <nav className={style.navBar}>
             {isMobile && (
