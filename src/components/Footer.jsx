@@ -8,7 +8,7 @@ function Footer() {
             bottom: '0',
             width: '100%',
         }}>
-            <p style={{ fontSize: '0.8em' }}>© 2024 My ToDo App. All rights reserved.</p>
+            <p style={{ fontSize: '0.8em' }}>© {new Date().getFullYear()} · My ToDo App. All rights reserved.</p>
         </footer>
     );
 }
