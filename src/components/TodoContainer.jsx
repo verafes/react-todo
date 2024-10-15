@@ -104,6 +104,7 @@ function TodoContainer({ tableName, baseId, apiKey }) {
 
     // hook to fetch data from API
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         fetchData();
     }, [listName]);
 
