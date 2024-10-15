@@ -17,6 +17,7 @@ function TodoListItem({ todo, onRemoveTodo }) {
                 <span
                     className={`${style.todoText} ${isCompleted ? style.completed : ''}`}
                     onClick={handleToggleCompletion}
+                    role="button"
                 >
                     {todo.title}
                 </span>
@@ -33,8 +34,8 @@ function TodoListItem({ todo, onRemoveTodo }) {
 }
 
 TodoListItem.propTypes = {
-    todo: PropTypes.object,
-    onRemoveTodo: PropTypes.func,
+    todo: PropTypes.object.isRequired,
+    onRemoveTodo: PropTypes.func.isRequired,
 };
 
 export default TodoListItem;

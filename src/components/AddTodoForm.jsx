@@ -20,7 +20,7 @@ function AddTodoForm({ onAddTodo }) {
         setTodoTitle("");
     };
     return (
-        <form onSubmit={handleAddTodo} className={style.form}>
+        <form onSubmit={handleAddTodo} className={style.form} aria-labelledby="add-todo-form">
                 <InputWithLabel
                     id="todoTitle"
                     type="text"
@@ -30,13 +30,13 @@ function AddTodoForm({ onAddTodo }) {
                 >
                     <strong>Title: </strong>
                 </InputWithLabel>
-                <button className={style.submitButton} type="submit">Add</button>
+                <button className={style.submitButton} type="submit" aria-label="Add todo">Add</button>
         </form>
 );
 }
 
 AddTodoForm.propTypes = {
-    onAddTodo: PropTypes.func,
+    onAddTodo: PropTypes.func.isRequired,
 };
 
 export default AddTodoForm;

@@ -43,9 +43,6 @@
 }
 
 @media (max-width: 768px) {
-   /*.container {*/
-   /*     margin-top: 5rem;*/
-   /* }*/
     .navBar {
         justify-content: space-between;
     }

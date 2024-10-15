@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import selectorStyles from './TodoListSelector.module.css';
 import styles from './TodoContainer.module.css';
@@ -41,6 +41,7 @@ function TodoListSelector({ tableName, baseId, apiKey }) {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         fetchTodoLists();
     }, []);
 
@@ -61,18 +62,25 @@ function TodoListSelector({ tableName, baseId, apiKey }) {
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : (
-                    <ul >
+                    <ul>
                         {todoLists.map(list => (
                             <li key={list} className={selectorStyles.listsItem}>
                                 <a className={selectorStyles.link}
-                                   onClick={() => handleListClick(list)}>
+                                   aria-label={`Navigate to the todo list: ${list}`}
+                                   onClick={() => handleListClick(list)}
+                                   role="link"
+                                >
                                     {list}
                                 </a>
                             </li>
                         ))}
                     </ul>
                 )}
+                <div style={{marginTop: '1rem'}}>
+                    <Link to="/new" className="view-lists-link">New Todo List</Link>
+                </div>
             </div>
+
         </div>
     );
 }
